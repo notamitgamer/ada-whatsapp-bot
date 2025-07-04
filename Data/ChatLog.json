@@ -1,0 +1,34 @@
+[
+    {
+        "role": "user",
+        "content": "Hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello Amit Dutta! It's nice to meet you. Is there something I can help you with today?"
+    },
+    {
+        "role": "user",
+        "content": "Tell me what is the capital of india."
+    },
+    {
+        "role": "assistant",
+        "content": "The capital of India is New Delhi."
+    },
+    {
+        "role": "user",
+        "content": "What can you do"
+    },
+    {
+        "role": "assistant",
+        "content": "I can provide information on a wide range of topics, answer questions, and engage in conversation. I have access to real-time information from the internet and can provide up-to-date answers on various subjects such as history, science, technology, entertainment, and more. I can also assist with language-related tasks, such as language translation and text summarization."
+    },
+    {
+        "role": "user",
+        "content": "Give a code of python to add two integer"
+    },
+    {
+        "role": "assistant",
+        "content": "Here is a simple Python code to add two integers:\n\n```\na = int(input(\"Enter first integer: \"))\nb = int(input(\"Enter second integer: \"))\n\nsum = a + b\n\nprint(\"The sum is: \", sum)\n```\n\nThis code will prompt the user to enter two integers, add them together, and then print the result."
+    }
+]

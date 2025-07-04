@@ -7,14 +7,11 @@ import os
 from dotenv import dotenv_values
 import re
 
-env_path = os.path.abspath("G:/ai/.env")
-env_vars = dotenv_values(env_path)
+Username = "Amit Dutta"
+Assistantname = "Eva"
 
-Username = env_vars.get("Username")
-Assistantname = env_vars.get("Assistantname")
-GroqAPIKey = env_vars.get("GroqAPIKey")
-
-client = Groq(api_key=GroqAPIKey)
+client = Groq(
+    api_key="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")
 
 messages = []
 
@@ -24,9 +21,7 @@ System = f"""Hello, I am {Username}, You are a very accurate and advanced AI cha
 *** Do not provide notes in the output, just answer the question and never mention your training data. ***
 """
 
-SystemChatBot = [
-    {"role": "system", "content": System}
-]
+SystemChatBot = [{"role": "system", "content": System}]
 
 try:
     with open(r"Data\ChatLog.json", "r") as f:
@@ -35,9 +30,11 @@ except FileNotFoundError:
     with open(r"Data\ChatLog.json", "w") as f:
         dump([], f)
 except json.JSONDecodeError:
-    print("ChatLog.json is empty or corrupted. Initializing with an empty list.")
+    print(
+        "ChatLog.json is empty or corrupted. Initializing with an empty list.")
     with open(r"Data\ChatLog.json", "w") as f:
         dump([], f)
+
 
 def RealtimeInformation():
     current_date_time = datetime.datetime.now()
@@ -54,6 +51,7 @@ def RealtimeInformation():
     data += f"Time: {hour} hours, {minute} minutes, {second} seconds.\n"
     return data
 
+
 def AnswerModifier(Answer):
     lines = Answer.split('\n')
     non_empty_lines = [line for line in lines if line.strip()]
@@ -68,9 +66,11 @@ def load_guest_names():
     except:
         return {}
 
+
 def save_guest_names(data):
     with open(r"Data\GuestNames.json", "w") as f:
         json.dump(data, f, indent=4)
+
 
 def extract_name(query):
     # Expecting format: name: Rahul
@@ -78,6 +78,7 @@ def extract_name(query):
     if match:
         return match.group(1).capitalize()
     return None
+
 
 def ChatBot(Query, sender_number=None):
     try:
@@ -90,21 +91,43 @@ def ChatBot(Query, sender_number=None):
 
         # 🧠 Handle guest identity protection BEFORE AI runs
         identity_patterns = [
-        # English
-        "what is my name", "what's my name", "do you know my name", "who am i", 
-        "do you know who i am", "tell me about me", "what do you know about me",
-        "who is chatting with you", "who is the user", "what is the user's name",
+            # English
+            "what is my name",
+            "what's my name",
+            "do you know my name",
+            "who am i",
+            "do you know who i am",
+            "tell me about me",
+            "what do you know about me",
+            "who is chatting with you",
+            "who is the user",
+            "what is the user's name",
 
-        # Roman Bengali (Benglish)
-        "amar naam ki", "amar nam ki", "ami ke", "amar shomporke bolo", "amar somporke bolo", 
-        "tumi ki amake chino", "ami tomar sathe kothay bolchi", "ami tomar sathe kotha bolchi",
-        "ke bolche", "ke chat korche", "ke message pathalo",
+            # Roman Bengali (Benglish)
+            "amar naam ki",
+            "amar nam ki",
+            "ami ke",
+            "amar shomporke bolo",
+            "amar somporke bolo",
+            "tumi ki amake chino",
+            "ami tomar sathe kothay bolchi",
+            "ami tomar sathe kotha bolchi",
+            "ke bolche",
+            "ke chat korche",
+            "ke message pathalo",
 
-        # Bengali script
-        "আমার নাম কি", "আমি কে", "আমাকে চিনো", "তুমি জানো আমি কে", "কে বলছে", "তুমি কে",
-        "তুমি কি জানো আমি কে", "আমার সম্পর্কে বল", "আমাকে চিনতে পারো", "কে মেসেজ পাঠালো"
+            # Bengali script
+            "আমার নাম কি",
+            "আমি কে",
+            "আমাকে চিনো",
+            "তুমি জানো আমি কে",
+            "কে বলছে",
+            "তুমি কে",
+            "তুমি কি জানো আমি কে",
+            "আমার সম্পর্কে বল",
+            "আমাকে চিনতে পারো",
+            "কে মেসেজ পাঠালো"
         ]
-
 
         for phrase in identity_patterns:
             if not is_owner and phrase in lowered:
@@ -124,15 +147,16 @@ def ChatBot(Query, sender_number=None):
 
         # 🤖 Run AI model
         messages.append({"role": "user", "content": Query})
-        full_messages = SystemChatBot + [{"role": "system", "content": RealtimeInformation()}] + messages
+        full_messages = SystemChatBot + [{
+            "role": "system",
+            "content": RealtimeInformation()
+        }] + messages
 
-        completion = client.chat.completions.create(
-            model="llama3-70b-8192",
-            messages=full_messages,
-            max_tokens=1024,
-            temperature=0.7,
-            top_p=1
-        )
+        completion = client.chat.completions.create(model="llama3-70b-8192",
+                                                    messages=full_messages,
+                                                    max_tokens=1024,
+                                                    temperature=0.7,
+                                                    top_p=1)
 
         Answer = completion.choices[0].message.content.strip()
 
@@ -150,8 +174,6 @@ def ChatBot(Query, sender_number=None):
         with open(r"Data\ChatLog.json", "w") as f:
             dump([], f, indent=4)
         return "An error occurred, please try again."
-
-
 
 
 if __name__ == "__main__":

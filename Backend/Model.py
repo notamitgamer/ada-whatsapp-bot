@@ -2,10 +2,9 @@ import cohere
 from rich import print
 from dotenv import dotenv_values
 
-env_vars = dotenv_values(".env")
-CohereAPIKey = env_vars["CohereAPIKey"]
 
-co = cohere.Client(api_key=CohereAPIKey)
+
+co = cohere.Client(api_key="bsORvbMRJY3TVfIbrFmdx9rIKIwOC7cAoGxdbVn5")
 
 funcs = [
     "exit", "general", "realtime", "open", "close", "play",

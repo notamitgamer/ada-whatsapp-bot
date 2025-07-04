@@ -1,3 +1,7 @@
+"scripts": {
+  "start": "node index.js"
+}
+
 {
   "name": "ai",
   "version": "1.0.0",

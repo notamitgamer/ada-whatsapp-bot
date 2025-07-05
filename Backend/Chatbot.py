@@ -7,18 +7,12 @@ import os
 from dotenv import dotenv_values
 import re
 
-env_path = os.path.abspath("ai/.env")
-env_vars = dotenv_values(env_path)
-
-Username = env_vars.get("Username")
-Assistantname = env_vars.get("Assistantname")
-GroqAPIKey = env_vars.get("APIKey")
 
 Username = "Amit Dutta"
-Assistantname = "Eva"
+Assistantname = "Ada"
 
 client = Groq(
-    api_key="APIkey")
+    api_key="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")
 
 messages = []
 
